@@ -1,12 +1,12 @@
 import React from 'react';
-import { Icon } from '@mui/material';
+import Badge from '@mui/material/Badge';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function CartWidget() {
     return (
-      <Icon>
-        <ShoppingCartIcon />
-      </Icon>
+      <Badge badgeContent={4} color="primary">
+      <ShoppingCartIcon color="action" />
+    </Badge>
     );
   }
   export default CartWidget;

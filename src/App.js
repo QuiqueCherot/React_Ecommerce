@@ -1,12 +1,10 @@
 import './App.css';
-import Main from './components/pages/main';
-import ResponsiveAppBar from './components/Nav-Bar';
+import Home from './components/pages/home';
 
 function App() {
   return (
     <div className="App">
-      <ResponsiveAppBar/>
-      <Main/>
+      <Home/>
     </div>
   );
 }
