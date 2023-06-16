@@ -35,6 +35,8 @@ function NavBar() {
     setAnchorElUser(null);
   };
 
+  const cant = 3;
+
   return (
     <AppBar position="static" sx={{ backgroundColor: 'lightyellow', color: 'black'}} >
       <Container maxWidth="xl">
@@ -130,7 +132,7 @@ function NavBar() {
               </IconButton>
             </Tooltip>
             <Box sx={{ ml: 2 }}>{}</Box>
-            <CartWidget/>
+            <CartWidget cartQuantity={cant}/>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
