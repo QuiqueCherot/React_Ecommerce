@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import CartWidget from '../CartWidget/cartwidget';
+import CartWidget from '../CartWidget/CartWidget';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const pages = ['Productos', 'Ofertas', 'Blog'];
