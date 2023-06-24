@@ -4,7 +4,6 @@ const ItemListContainer = ({ greeting }) => {
     return (
       <div>
         <h2>{greeting}</h2>
-        {/* Otros componentes y contenido relacionado */}
       </div>
     );
 };
