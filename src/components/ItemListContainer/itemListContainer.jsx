@@ -1,9 +1,26 @@
-import React from 'react'
+import { Card } from '@mui/material';
+import React, {useEffect} from 'react'
+import { fetchProducts } from '../../sdk/api';
+
+//const products = [];
 
 const ItemListContainer = ({ greeting }) => {
+    useEffect(() => {
+      fetchProducts()
+        .then((products) => {
+          console.log(products);
+          products.push(products);
+        })
+        .catch((error) => {
+          console.error('Error al obtener los productos:', error);
+        });
+    }, []);
+  
     return (
       <div>
-        <h2>{greeting}</h2>
+        <Card>
+          <title ></title>
+        </Card>
       </div>
     );
 };

@@ -12,11 +12,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CartWidget from '../CartWidget/CartWidget';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Card, CardContent, CardMedia } from '@mui/material';
-import Slide from '@mui/material/Slide';
+import SlideComponent from './slideComponent';
 
 
-const pages = ['Productos', 'Ofertas', 'Blog'];
+const pages = ['Men', 'Women', 'Jewelery'];
 const settings = ['Perfil', 'Métodos de Pago', 'Dashboard', 'Logout'];
 
 function NavBar() {
@@ -25,7 +24,7 @@ function NavBar() {
   const [openMenu, setOpenMenu] = React.useState(false);// de momento no lleva a ningún lado
   const [isHovered, setIsHovered] = React.useState(false);
 
-
+//Para Abrir Menu
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -41,7 +40,7 @@ function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+// Para abrir buttons del menu (Men, etc..)
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
   };
@@ -150,7 +149,7 @@ function NavBar() {
                 onMouseLeave={handleMouseLeave}
                 sx={{ 
                   color: 'black', 
-                  display: 'flex' 
+                  display: 'flex',
                 }}
               >
                 {page}
@@ -158,102 +157,12 @@ function NavBar() {
             ))}
           </Box>
           {(openMenu || isHovered) && (
-            <Slide direction="up" in={true} mountOnEnter unmountOnExit>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '5px',
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  backgroundColor: 'white',
-                  width: '100%',
-                }}
-              >
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    image="https://picsum.photos/200/300"
-                    title="green iguana"
-                  />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Lizard
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                      </Typography>
-                    </CardContent>
-                </Card>
-              </Box>
-            </Slide>
+            <SlideComponent sx={{mt: '40px'}}/>
           )}
-          <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ 
+            flexGrow: 0, 
+            display: 'flex', 
+            alignItems: 'center' }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <SettingsIcon />
