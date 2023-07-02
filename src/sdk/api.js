@@ -6,12 +6,13 @@ async function get(endpoint) {
   return data;
 }
 
-export const fetchProducts = async () => {
-  const category = "men's clothing";
-  const limit = 5;
+export const fetchProducts = async (category) => {
+  const limit = 4;
   const endpoint = `/products/category/${encodeURIComponent(category)}?limit=${limit}`;
   return get(endpoint);
 };
+
+
 
 
  

@@ -13,18 +13,23 @@ import MenuItem from '@mui/material/MenuItem';
 import CartWidget from '../CartWidget/CartWidget';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SlideComponent from './slideComponent';
+import { Link, NavLink } from 'react-router-dom';
 
-
-const pages = ['Men', 'Women', 'Jewelery'];
+const pages = [
+  { label: 'Men', cat: "men's clothing" },
+  { label: 'Women', cat: "women's clothing" },
+  { label: 'Jewelery', cat: 'jewelery' },
+];
 const settings = ['Perfil', 'Métodos de Pago', 'Dashboard', 'Logout'];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [openMenu, setOpenMenu] = React.useState(false);// de momento no lleva a ningún lado
+  //const [openMenu, setOpenMenu] = React.useState();
   const [isHovered, setIsHovered] = React.useState(false);
+  const [selectedPage, setSelectedPage] = React.useState(null);
 
-//Para Abrir Menu
+  // Para Abrir Menu
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -40,20 +45,20 @@ function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-// Para abrir buttons del menu (Men, etc..)
-  const handleOpenMenu = () => {
-    setOpenMenu(!openMenu);
+
+  /*const handleOpenMenu = (page) => {
+    setOpenMenu(page.cat);
+  };*/
+
+  const handleMouseEnter = (page) => {
+    setIsHovered(true);
+    setSelectedPage(page.cat);
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-  
   const handleMouseLeave = () => {
     setIsHovered(false);
+    setSelectedPage(null);
   };
-  
-
 
   const cant = 3;
 
@@ -64,8 +69,8 @@ function NavBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -109,13 +114,13 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem 
-                key={page} 
-                onClick={handleCloseNavMenu}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                <MenuItem
+                  key={page.label}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  sx={{ color: 'black', display: 'flex' }}
                 >
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -123,8 +128,8 @@ function NavBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -138,31 +143,25 @@ function NavBar() {
           >
             TradeZone
           </Typography>
-          <Box sx={{ 
-            flexGrow: 1, 
-            display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleOpenMenu}
-                onMouseEnter={handleMouseEnter}
+                key={page.label}
+                component={NavLink}
+                to={`/products/${page.cat}`}
+                onMouseEnter={() => handleMouseEnter(page)}
                 onMouseLeave={handleMouseLeave}
-                sx={{ 
-                  color: 'black', 
+                sx={{
+                  color: page.cat === selectedPage ? 'blue' : 'black',
                   display: 'flex',
                 }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
-          {(openMenu || isHovered) && (
-            <SlideComponent sx={{mt: '40px'}}/>
-          )}
-          <Box sx={{ 
-            flexGrow: 0, 
-            display: 'flex', 
-            alignItems: 'center' }}>
+          {isHovered && <SlideComponent selectedPage={selectedPage} />}
+          <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <SettingsIcon />
@@ -200,5 +199,6 @@ function NavBar() {
 }
 
 export default NavBar;
+
 
 
