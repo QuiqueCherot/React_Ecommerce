@@ -14,18 +14,19 @@ import CartWidget from '../CartWidget/CartWidget';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SlideComponent from './slideComponent';
 import { Link, NavLink } from 'react-router-dom';
+import ProductListContainer from '../../containers/ProductListContainer/ProductListContainer';
 
 const pages = [
-  { label: 'Men', cat: "men's clothing" },
-  { label: 'Women', cat: "women's clothing" },
-  { label: 'Jewelery', cat: 'jewelery' },
+  { label: 'Men', cat: "men's clothing", id: 'ropaHombre' },
+  { label: 'Women', cat: "women's clothing", id: 'ropaMujer' },
+  { label: 'Jewelery', cat: 'jewelery', id: 'Joyas' },
 ];
 const settings = ['Perfil', 'Métodos de Pago', 'Dashboard', 'Logout'];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  //const [openMenu, setOpenMenu] = React.useState();
+  const [openMenu, setOpenMenu] = React.useState();
   const [isHovered, setIsHovered] = React.useState(false);
   const [selectedPage, setSelectedPage] = React.useState(null);
 
@@ -46,13 +47,13 @@ function NavBar() {
     setAnchorElUser(null);
   };
 
-  /*const handleOpenMenu = (page) => {
-    setOpenMenu(page.cat);
-  };*/
+  const handleOpenMenu = () => {
+    setOpenMenu(true);
+  };
 
   const handleMouseEnter = (page) => {
     setIsHovered(true);
-    setSelectedPage(page.cat);
+    setSelectedPage(page.id);
   };
 
   const handleMouseLeave = () => {
@@ -65,24 +66,24 @@ function NavBar() {
   return (
     <AppBar position="static" sx={{ backgroundColor: 'lightyellow', color: 'black' }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ flexGrow: 1 }}>
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            TradeZone
-          </Typography>
+        <Toolbar sx={{ flexGrow: 1 }}>
+          <Link to={'/products/Todos'} sx={{textDecoration: 'none'}}>
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              TradeZone
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -129,7 +130,7 @@ function NavBar() {
             variant="h5"
             noWrap
             component={Link}
-            to="/"
+            to="/p"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -148,7 +149,8 @@ function NavBar() {
               <Button
                 key={page.label}
                 component={NavLink}
-                to={`/products/${page.cat}`}
+                to={`/${page.cat}`}
+                onClick={handleOpenMenu}
                 onMouseEnter={() => handleMouseEnter(page)}
                 onMouseLeave={handleMouseLeave}
                 sx={{
@@ -160,6 +162,7 @@ function NavBar() {
               </Button>
             ))}
           </Box>
+          {openMenu && <ProductListContainer selectedPage={decodeURIComponent(selectedPage)} />           }
           {isHovered && <SlideComponent selectedPage={selectedPage} />}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">
@@ -168,7 +171,9 @@ function NavBar() {
               </IconButton>
             </Tooltip>
             <Box sx={{ ml: 2 }}>{}</Box>
+            <Link to={'/cart'}>
             <CartWidget cartQuantity={cant} />
+            </Link>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

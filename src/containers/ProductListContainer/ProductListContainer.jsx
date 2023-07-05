@@ -2,7 +2,7 @@ import { Box, Card, CardContent, CardMedia, CircularProgress, Rating, Typography
 import React from 'react';
 import { fetchProducts } from '../../sdk/api';
 
-const ProductListContainer = ({ selectedPage, handleSelectCategory }) => {
+const ProductListContainer = ({ selectedPage}) => {
   const [products, setProducts] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -48,14 +48,12 @@ const ProductListContainer = ({ selectedPage, handleSelectCategory }) => {
           }}
         >
           <CircularProgress size={24} color="inherit" />
-          <Typography>Holaaaa</Typography>
         </Box>
       ) : (
         products.map((product) => (
           <Card
             key={product.id}
             sx={{ maxWidth: 345 }}
-            onClick={() => handleSelectCategory(product.category)}
           >
             <CardMedia sx={{ height: 450, width: 350 }} image={product.image} title={product.title} />
             <CardContent>
