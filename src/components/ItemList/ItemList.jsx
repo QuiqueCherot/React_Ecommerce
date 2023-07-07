@@ -25,7 +25,7 @@ const ItemList = ({category, items, isLoading}) => {
           <CircularProgress size={24} color="inherit" />
         </Box>
       ) : (
-        items && items.map((item) => <ItemCard data={item} key={item.id} category={category} />)
+        items && items.map((item) => <ItemCard data={item} key={item.id} />)
       )
       }
     </Box>

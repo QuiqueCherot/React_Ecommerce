@@ -20,8 +20,8 @@ export const getProducts = (producto, limit, id) => {
   return fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${producto}`);
 };
 
-export const getProduct = (producto, id) =>{
-    return fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${producto}&id=${id}`);
+export const getProduct = (id) =>{
+    return fetch(`https://api.mercadolibre.com/items/${id}`);
   
 }
 

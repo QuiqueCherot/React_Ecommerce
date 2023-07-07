@@ -4,29 +4,26 @@ import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Typography
 import { getProduct } from '../../sdk/api';
 
 const ItemDetail = () => {
-    const { category,id } = useParams();
-    const [producto, setProducto] = React.useState();
+    const { id } = useParams();
+    const [producto, setProducto] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(true);
-/*EL PROBLEMA QUE TENGO ES QUE ESTÁ TIRANDO ERRORES POR TODAS PARTES.... PENSE EN PRINCIPIO
-SI LA LLAMADA ESTABA BIEN PERO RECIBO ACÁ UN ARRAY POR LO QUE PARA MI, TENEMOS UN PROBLEMA EN 
-LA LLAMADA. HABRÍA QUE VER CÓMO EJECUTAR DE ÚLTIMA LLAMAMOS OTRA QUE PUEDE SER GETPRODUCT logre conseguir 
-que aparezca category y ID por lo que estoy 100% seguro que el problema es el link de llamada. */
+    const { thumbnail, title, price, initial_quantity } = producto;
+
     React.useEffect(() => {
-        getProduct(category,id)
+        getProduct(id)
           .then((res) => res.json())
           .then((res) => {
-            setProducto(res.results);
-            console.log(res.results);
-            console.log(category + id);
+            setProducto(res);
           })
           .catch((error) => {
             console.error('Error fetching products:', error);
           })
-          .finally(
-            setIsLoading(false)
+          .finally(() => {
+            setIsLoading(false);
+          }
             
           );
-      }, [id,category]);
+      }, [id]);
   return (
 
     <Box
@@ -34,12 +31,10 @@ que aparezca category y ID por lo que estoy 100% seguro que el problema es el li
           display: 'flex',
           gap: '2px',
           position: 'absolute',
-          top: '100%',
           left: 0,
           backgroundColor: 'white',
           width: '100%',
           mt: '2px',
-          zIndex: 1
         }}
       >
         {isLoading ? (
@@ -58,21 +53,21 @@ que aparezca category y ID por lo que estoy 100% seguro que el problema es el li
             <Card
             key={producto.id}
             sx={{
-                maxWidth: 345,
-                margin: '10px',
+                maxWidth: 800,
+                margin: 'auto',
                 display:'flex',
                 flexDirection:'column',
                 justifyContent:'center',
                 alignItems:'center'
             }}
             >
-                <CardMedia sx={{ height: 200, width: 100}} image={producto.thumbnail} title={producto.title} />
+                <CardMedia sx={{ height: 500, width: 300}} image={thumbnail} title={title} />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {producto.title}
+                        {title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        ${producto.price}
+                        ${price}
                     </Typography>
                     <Button>
                         <Link to={`/cart`}>Añadir al Carrito</Link>

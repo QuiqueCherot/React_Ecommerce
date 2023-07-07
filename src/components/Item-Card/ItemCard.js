@@ -2,8 +2,8 @@ import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/mate
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const dataCard = ({ category, data }) => {
-    console.log("acá category", category)
+const dataCard = ({data }) => {
+    
     return (
         <Box sx={{
             display: 'flex',
@@ -31,7 +31,7 @@ const dataCard = ({ category, data }) => {
                             ${data.price}
                         </Typography>
                         <Button>
-                            <Link to={`/products/${category}/${data.id}`}>Ver detalle</Link>
+                            <Link to={`/item/${data.id}`}>Ver detalle</Link>
                         </Button>
                     </CardContent>
                 </Card>
