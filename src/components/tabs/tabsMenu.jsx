@@ -10,7 +10,6 @@ const TabsMenu = ({ current, items }) => {
 
   const handleChange = (_, newValue) => {
     navigate('/products/' + newValue);
-    console.log(newValue);
   };
 
   return (

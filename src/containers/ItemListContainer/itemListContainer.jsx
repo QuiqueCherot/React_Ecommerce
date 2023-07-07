@@ -21,7 +21,6 @@ function ItemListContainer() {
     getProducts(category)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res.results);
         setItems(res.results);
       })
       .catch((error) => {

@@ -3,7 +3,6 @@ import ItemCard from '../Item-Card/ItemCard';
 import { Box, CircularProgress } from '@mui/material';
 
 const ItemList = ({category, items, isLoading}) => {
-  console.log(category)
   return (
     <Box sx={{
       display: 'flex',
