@@ -15,6 +15,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SlideComponent from './slideComponent';
 import { Link, NavLink } from 'react-router-dom';
 import ProductListContainer from '../../containers/ProductListContainer/ProductListContainer';
+import { AppContext } from '../../context/context';
 
 const pages = [
   { label: 'Men', cat: "men's clothing", id: 'ropaHombre' },
@@ -29,6 +30,7 @@ function NavBar() {
   const [openMenu, setOpenMenu] = React.useState();
   const [isHovered, setIsHovered] = React.useState(false);
   const [selectedPage, setSelectedPage] = React.useState(null);
+  const { cartQuantity } = React.useContext(AppContext);
 
   // Para Abrir Menu
   const handleOpenNavMenu = (event) => {
@@ -61,8 +63,7 @@ function NavBar() {
     setSelectedPage(null);
   };
 
-  const cant = 3;
-
+const cant = 0;
   return (
     <AppBar position="static" sx={{ backgroundColor: 'lightyellow', color: 'black' }}>
       <Container maxWidth="xl">
@@ -170,10 +171,12 @@ function NavBar() {
                 <SettingsIcon />
               </IconButton>
             </Tooltip>
-            <Box sx={{ ml: 2 }}>{}</Box>
-            <Link to={'/cart'}>
-            <CartWidget cartQuantity={cant} />
-            </Link>
+            <Box sx={{ ml: 2 }}>
+              <Link to={'/cart'}>
+                {cant !== 0 ? null : <CartWidget cartQuantity={cartQuantity} />}            
+              </Link>
+            </Box>
+            
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

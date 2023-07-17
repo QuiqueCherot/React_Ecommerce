@@ -1,9 +1,8 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const dataCard = ({data }) => {
-    
+const ItemCard = ({ data }) => {
     return (
         <Box sx={{
             display: 'flex',
@@ -30,13 +29,11 @@ const dataCard = ({data }) => {
                         <Typography variant="body2" color="text.secondary">
                             ${data.price}
                         </Typography>
-                        <Button>
-                            <Link to={`/item/${data.id}`}>Ver detalle</Link>
-                        </Button>
+                        <Link to={`/item/${data.id}`}>Ver detalle</Link>
                     </CardContent>
                 </Card>
         </Box>
     )
 }
 
-export default dataCard;
+export default ItemCard;

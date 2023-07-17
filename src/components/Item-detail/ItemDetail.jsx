@@ -1,13 +1,40 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Typography } from '@mui/material';
 import { getProduct } from '../../sdk/api';
+import { AppContext } from '../../context/context';
 
 const ItemDetail = () => {
     const { id } = useParams();
     const [producto, setProducto] = React.useState({});
     const [isLoading, setIsLoading] = React.useState(true);
     const { thumbnail, title, price, initial_quantity } = producto;
+    const [counter, setCounter] = React.useState(1);
+    const { addProduct } = React.useContext(AppContext);
+
+    const addItem = ()=>{
+      if(producto.initial_quantity<=counter){
+        return;
+      }
+      setCounter(counter + 1);      
+    }
+
+    const removeItem = ()=>{
+      if(counter<=1){
+        return;
+      }
+      setCounter(counter -1);
+    }
+
+    const addCarrito = ()=>{
+      addProduct({
+        id: id,
+        producto: title,
+        image: thumbnail,
+        precioUnitario: price,
+        cantidad: counter
+      });
+    }
 
     React.useEffect(() => {
         getProduct(id)
@@ -69,9 +96,15 @@ const ItemDetail = () => {
                     <Typography variant="body2" color="text.secondary">
                         ${price}
                     </Typography>
-                    <Button>
-                        <Link to={`/cart`}>Añadir al Carrito</Link>
-                    </Button>
+                    <Typography variant="body2" color="text.secondary">
+                        Cantidad:{initial_quantity}
+                    </Typography>
+                    <Button onClick={ addCarrito}> Añadir al Carrito </Button>
+                    <Box>
+                      <Button variant="text" color="error" onClick={removeItem}>-</Button>
+                      <Typography variant='p'>{counter}</Typography>
+                      <Button variant="text" color='success' onClick={addItem}>+</Button>
+                    </Box>
                 </CardContent>
             </Card>
           )}
