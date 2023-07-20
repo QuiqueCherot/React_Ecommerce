@@ -6,7 +6,7 @@ import { CircularProgress } from '@mui/material';
 import ItemCard from '../Item-Card/ItemCard';
 const LIMIT = 4;
 
-const SlideComponent = ({selectedPage}) => {
+const SlideComponent = ({selectedPage, handleMouseLeave}) => {
   const [productos, setProductos] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   
@@ -25,7 +25,7 @@ const SlideComponent = ({selectedPage}) => {
   }, [selectedPage]);
      
   return (
-    <Slide direction="right" in={true} mountOnEnter unmountOnExit>
+    <Slide direction="right" in={true} mountOnEnter unmountOnExit onExited={handleMouseLeave}>
       <Box
         sx={{
           display: 'flex',

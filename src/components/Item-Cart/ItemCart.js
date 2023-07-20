@@ -1,7 +1,8 @@
-import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import React from 'react'
 
-const ItemCart = ({ data }) => {
+const ItemCart = ({ data, removeProduct }) => {
+const { producto, precioUnitario, cantidad, id, image} = data;
     return (
 
         <Box sx={{
@@ -11,7 +12,7 @@ const ItemCart = ({ data }) => {
             justifyContent: 'center'
         }}>
             <Card
-                key={data.id}
+                key={id}
                 sx={{
                     maxWidth: 400,
                     margin: '10px',
@@ -21,7 +22,7 @@ const ItemCart = ({ data }) => {
                     alignItems:'center'
                 }}
                 >
-                    <CardMedia sx={{ height: 200, width: 250}} image={data.image} title={data.producto} />
+                    <CardMedia sx={{ height: 200, width: 250}} image={image} title={producto} />
                     <CardContent sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -29,14 +30,17 @@ const ItemCart = ({ data }) => {
                         textAlign: 'center'
                         }}>
                         <Typography gutterBottom variant="h7" component="div">
-                            {data.producto}
+                            {producto}
                         </Typography>
                         <Typography variant="body1" color="text.secondary">
-                            ${data.precioUnitario}
+                            ${precioUnitario}
                         </Typography>
                         <Typography variant="body1" color="text.secondary">
-                            Cantidad: {data.cantidad}
+                            Cantidad: {cantidad}
                         </Typography>
+                        <Button onClick={()=>removeProduct(id)}>
+                            Eliminar
+                        </Button>
                     </CardContent>
                 </Card>
         </Box>

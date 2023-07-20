@@ -164,7 +164,7 @@ const cant = 0;
             ))}
           </Box>
           {openMenu && <ProductListContainer selectedPage={decodeURIComponent(selectedPage)} />           }
-          {isHovered && <SlideComponent selectedPage={selectedPage} />}
+          {isHovered && <SlideComponent selectedPage={selectedPage} handleMouseLeave={handleMouseLeave} />}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

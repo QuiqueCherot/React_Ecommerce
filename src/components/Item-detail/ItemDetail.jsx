@@ -10,13 +10,14 @@ const ItemDetail = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const { thumbnail, title, price, initial_quantity } = producto;
     const [counter, setCounter] = React.useState(1);
-    const { addProduct } = React.useContext(AppContext);
+    const { addProduct, carrito, setCarrito } = React.useContext(AppContext);
 
     const addItem = ()=>{
       if(producto.initial_quantity<=counter){
         return;
       }
-      setCounter(counter + 1);      
+      setCounter(counter + 1);    
+      producto.initial_quantity = producto.initial_quantity - 1; 
     }
 
     const removeItem = ()=>{
@@ -27,6 +28,18 @@ const ItemDetail = () => {
     }
 
     const addCarrito = ()=>{
+      
+      const existingProduct = carrito.find((product) => product.id === id);
+    
+      if (existingProduct) {
+        const updatedProducts = carrito.map((product) =>
+          product.id === id ? { ...product, cantidad: product.cantidad + 1 } : product
+        );
+        setCarrito([
+          ...carrito.filter((product) => product.id !== id),
+          ...updatedProducts,
+        ]);
+      } else {
       addProduct({
         id: id,
         producto: title,
@@ -35,6 +48,7 @@ const ItemDetail = () => {
         cantidad: counter
       });
     }
+  }
 
     React.useEffect(() => {
         getProduct(id)

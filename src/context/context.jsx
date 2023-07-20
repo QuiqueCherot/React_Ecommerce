@@ -8,17 +8,13 @@ const ContextProvider = ({children}) => {
 
     const addProduct = (product)=>{
         setCarrito([...carrito, product]);
-        console.log(carrito);
     }
     const removeProduct = (product)=>{
-        const updatedCarrito = carrito.filter((item) => item !== product);
-        if(!updatedCarrito){
-            return;
-        }   
+        const updatedCarrito = carrito.filter((item) => item.id !== product);
         setCarrito(updatedCarrito);     
     }
   return (
-    <Provider value={{carrito, addProduct, removeProduct, cartQuantity: carrito.length}}>
+    <Provider value={{carrito, setCarrito, addProduct, removeProduct, cartQuantity: carrito.length}}>
         {children}
     </Provider>
   )
