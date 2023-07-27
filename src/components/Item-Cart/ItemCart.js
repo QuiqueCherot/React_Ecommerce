@@ -4,7 +4,7 @@ import React from 'react'
 const ItemCart = ({ data, removeProduct }) => {
 const { producto, precioUnitario, cantidad, id, image} = data;
     return (
-
+        
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -43,7 +43,9 @@ const { producto, precioUnitario, cantidad, id, image} = data;
                         </Button>
                     </CardContent>
                 </Card>
+                
         </Box>
+        
     )
 }
 

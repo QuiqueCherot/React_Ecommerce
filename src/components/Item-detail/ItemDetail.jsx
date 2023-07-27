@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Typography } from '@mui/material';
-import { getProduct } from '../../sdk/api';
 import { AppContext } from '../../context/context';
+import { collection, getDocs, getFirestore } from 'firebase/firestore'
 
 const ItemDetail = () => {
     const { id } = useParams();
@@ -11,13 +11,13 @@ const ItemDetail = () => {
     const { thumbnail, title, price, initial_quantity } = producto;
     const [counter, setCounter] = React.useState(1);
     const { addProduct, carrito, setCarrito } = React.useContext(AppContext);
+    
 
     const addItem = ()=>{
       if(producto.initial_quantity<=counter){
         return;
       }
       setCounter(counter + 1);    
-      producto.initial_quantity = producto.initial_quantity - 1; 
     }
 
     const removeItem = ()=>{
@@ -39,6 +39,7 @@ const ItemDetail = () => {
           ...carrito.filter((product) => product.id !== id),
           ...updatedProducts,
         ]);
+        producto.initial_quantity = producto.initial_quantity-counter;
       } else {
       addProduct({
         id: id,
@@ -47,24 +48,32 @@ const ItemDetail = () => {
         precioUnitario: price,
         cantidad: counter
       });
+      producto.initial_quantity = producto.initial_quantity-counter;
     }
   }
+  React.useEffect(() => {
+    const db = getFirestore();
+    const productsCollection = collection(db, 'productos');
 
-    React.useEffect(() => {
-        getProduct(id)
-          .then((res) => res.json())
-          .then((res) => {
-            setProducto(res);
-          })
-          .catch((error) => {
-            console.error('Error fetching products:', error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          }
-            
-          );
-      }, [id]);
+    getDocs(productsCollection)
+      .then((snapshot) => {
+        const productos = snapshot.docs.map((doc) => doc.data());
+        const productData = productos.find((product) => product.productID === id);
+
+        if (productData) {
+          setProducto(productData);
+        } else {
+          console.error('Product not found.');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching product:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [id]);
+    
   return (
 
     <Box

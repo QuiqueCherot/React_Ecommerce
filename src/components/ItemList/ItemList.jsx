@@ -2,7 +2,7 @@ import React from 'react';
 import ItemCard from '../Item-Card/ItemCard';
 import { Box, CircularProgress } from '@mui/material';
 
-const ItemList = ({category, items, isLoading}) => {
+const ItemList = ({items, isLoading}) => {
   return (
     <Box sx={{
       display: 'flex',
@@ -24,7 +24,7 @@ const ItemList = ({category, items, isLoading}) => {
           <CircularProgress size={24} color="inherit" />
         </Box>
       ) : (
-        items && items.map((item) => <ItemCard data={item} key={item.id} />)
+        items && items.map((item, index) => <ItemCard data={item} key={index} />)
       )
       }
     </Box>

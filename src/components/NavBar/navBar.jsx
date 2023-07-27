@@ -14,7 +14,6 @@ import CartWidget from '../CartWidget/CartWidget';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SlideComponent from './slideComponent';
 import { Link, NavLink } from 'react-router-dom';
-import ProductListContainer from '../../containers/ProductListContainer/ProductListContainer';
 import { AppContext } from '../../context/context';
 
 const pages = [
@@ -65,10 +64,10 @@ function NavBar() {
 
 const cant = 0;
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'lightyellow', color: 'black' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#c0c0c0', color: 'black' }}>
       <Container maxWidth="xl">
         <Toolbar sx={{ flexGrow: 1 }}>
-          <Link to={'/products/Todos'} sx={{textDecoration: 'none'}}>
+          <Link to={'/products/Todos'} sx={{textDecoration: 'none'}} style={{ textDecoration: 'none' }}>
             <Typography
               variant="h6"
               noWrap
@@ -142,6 +141,7 @@ const cant = 0;
               color: 'inherit',
               textDecoration: 'none',
             }}
+            style={{ textDecoration: 'none' }}
           >
             TradeZone
           </Typography>
@@ -158,12 +158,13 @@ const cant = 0;
                   color: page.cat === selectedPage ? 'blue' : 'black',
                   display: 'flex',
                 }}
+                
               >
                 {page.label}
               </Button>
             ))}
           </Box>
-          {openMenu && <ProductListContainer selectedPage={decodeURIComponent(selectedPage)} />           }
+          {openMenu}
           {isHovered && <SlideComponent selectedPage={selectedPage} handleMouseLeave={handleMouseLeave} />}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">
