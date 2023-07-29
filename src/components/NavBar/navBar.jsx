@@ -19,14 +19,13 @@ import { AppContext } from '../../context/context';
 const pages = [
   { label: 'Men', cat: "men's clothing", id: 'ropaHombre' },
   { label: 'Women', cat: "women's clothing", id: 'ropaMujer' },
-  { label: 'Jewelery', cat: 'jewelery', id: 'Joyas' },
 ];
+
 const settings = ['Perfil', 'Métodos de Pago', 'Dashboard', 'Logout'];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [openMenu, setOpenMenu] = React.useState();
   const [isHovered, setIsHovered] = React.useState(false);
   const [selectedPage, setSelectedPage] = React.useState(null);
   const { cartQuantity } = React.useContext(AppContext);
@@ -46,10 +45,6 @@ function NavBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleOpenMenu = () => {
-    setOpenMenu(true);
   };
 
   const handleMouseEnter = (page) => {
@@ -151,7 +146,6 @@ const cant = 0;
                 key={page.label}
                 component={NavLink}
                 to={`/${page.cat}`}
-                onClick={handleOpenMenu}
                 onMouseEnter={() => handleMouseEnter(page)}
                 onMouseLeave={handleMouseLeave}
                 sx={{
@@ -164,7 +158,6 @@ const cant = 0;
               </Button>
             ))}
           </Box>
-          {openMenu}
           {isHovered && <SlideComponent selectedPage={selectedPage} handleMouseLeave={handleMouseLeave} />}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}>
             <Tooltip title="Open settings">

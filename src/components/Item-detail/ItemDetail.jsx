@@ -2,6 +2,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Typography } from '@mui/material';
 import { AppContext } from '../../context/context';
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import { collection, getDocs, getFirestore } from 'firebase/firestore'
 
 const ItemDetail = () => {
@@ -27,30 +29,28 @@ const ItemDetail = () => {
       setCounter(counter -1);
     }
 
-    const addCarrito = ()=>{
-      
+    const addCarrito = () => {
       const existingProduct = carrito.find((product) => product.id === id);
     
       if (existingProduct) {
         const updatedProducts = carrito.map((product) =>
-          product.id === id ? { ...product, cantidad: product.cantidad + 1 } : product
+          product.id === id ? { ...product, cantidad: product.cantidad + counter } : product
         );
-        setCarrito([
-          ...carrito.filter((product) => product.id !== id),
-          ...updatedProducts,
-        ]);
-        producto.initial_quantity = producto.initial_quantity-counter;
+        setCarrito(updatedProducts);
       } else {
-      addProduct({
-        id: id,
-        producto: title,
-        image: thumbnail,
-        precioUnitario: price,
-        cantidad: counter
-      });
+        addProduct({
+          id: id,
+          producto: title,
+          image: thumbnail,
+          precioUnitario: price,
+          cantidad: counter
+        });
+      }
+      setCounter(1);
       producto.initial_quantity = producto.initial_quantity-counter;
-    }
-  }
+    };
+    
+      
   React.useEffect(() => {
     const db = getFirestore();
     const productsCollection = collection(db, 'productos');
@@ -124,9 +124,13 @@ const ItemDetail = () => {
                     </Typography>
                     <Button onClick={ addCarrito}> Añadir al Carrito </Button>
                     <Box>
-                      <Button variant="text" color="error" onClick={removeItem}>-</Button>
+                      <Button variant="text" color="error" onClick={removeItem}>
+                      <RemoveIcon />
+                      </Button>
                       <Typography variant='p'>{counter}</Typography>
-                      <Button variant="text" color='success' onClick={addItem}>+</Button>
+                      <Button variant="text" color='success' onClick={addItem}>
+                      <AddIcon />
+                      </Button>
                     </Box>
                 </CardContent>
             </Card>

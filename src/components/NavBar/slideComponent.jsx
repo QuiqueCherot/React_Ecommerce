@@ -1,27 +1,36 @@
 import React from 'react'
 import { Box } from '@mui/material'
 import Slide from '@mui/material/Slide';
-import { getProducts } from '../../sdk/api';
 import { CircularProgress } from '@mui/material';
 import ItemCard from '../Item-Card/ItemCard';
-const LIMIT = 4;
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 
 const SlideComponent = ({selectedPage, handleMouseLeave}) => {
   const [productos, setProductos] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   
   React.useEffect(() => {
-    getProducts(selectedPage, LIMIT)
-      .then((res) => res.json())
-      .then((res) => {
-        setProductos(res.results);
+    const db = getFirestore();
+    const productsCollection = collection(db, 'productos');
+
+    getDocs(productsCollection)
+      .then((snapshot) => {
+        const productos = snapshot.docs.map((doc) => doc.data());
+        const productData = [];
+        productos.map((product) => product.category === selectedPage ? productData.push(product): "");
+
+        if (productData) {
+          setProductos(productData);
+        } else {
+          console.error('Product not found.');
+        }
       })
       .catch((error) => {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching product:', error);
       })
-      .finally(
-        setIsLoading(false)
-      );
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [selectedPage]);
      
   return (
@@ -52,7 +61,7 @@ const SlideComponent = ({selectedPage, handleMouseLeave}) => {
             <CircularProgress size={24} color='inherit' />
           </Box>
         ) : (
-          productos.map((product) => <ItemCard data={product} key={product.id} />)
+          productos.map((product, index) => <ItemCard data={product} key={index} />)
           )}
       </Box>
     </Slide>
